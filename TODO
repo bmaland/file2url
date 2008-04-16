@@ -1,0 +1,17 @@
+-Some reports etc, for example download stats:
+
+SELECT files.file_name, COUNT(download_logs.file_id) AS download_count
+  FROM download_logs
+    INNER JOIN files on download_logs.file_id = files.id
+  GROUP BY download_logs.file_id
+ORDER BY download_count DESC LIMIT 10;
+
+-Implement checking of file duration
+
+-Implement unit tests
+
+-Syntax highlighting of source code
+
+-Similar functionality to http://pear.php.net/package/HTTP_Upload
+
+-Implement support for uploading files via web interface

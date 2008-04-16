@@ -1,0 +1,5 @@
+.cache
+.project
+.settings
+public/files
+config.php

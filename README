@@ -1,0 +1,4 @@
+Requires PHP5 and Apache with mod_rewrite.
+The shellscript requires curl.
+
+Built with Zend Framework 1.5.1.
