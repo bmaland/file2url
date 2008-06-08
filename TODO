@@ -18,4 +18,3 @@ ORDER BY download_count DESC LIMIT 10;
 
 -Make "api key" optional
 
--Emacs: Function for uploading file in current buffer
