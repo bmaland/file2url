@@ -72,9 +72,11 @@ class File
             $i++;
         }
 
-        if (! move_uploaded_file($this->_tmpName, $c->fileDir . $this->_fileName)) {
+        if (! is_writable($c->fileDir)) {
             throw new Exception('Unable to write the file to the upload dir. Check permissions!');
         }
+
+        move_uploaded_file($this->_tmpName, $c->fileDir . $this->_fileName);
 
         $i = false;
         while (! $i) {

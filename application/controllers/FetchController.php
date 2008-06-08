@@ -38,7 +38,7 @@ class FetchController extends Zend_Controller_Action
                 }
             }
         } catch (Zend_Db_Adapter_Exception $e) {
-            $this->view->assign('error', 'Missing database driver.');
+            $this->view->assign('error', $e->getMessage());
         }
     }
 }

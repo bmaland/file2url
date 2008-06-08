@@ -27,7 +27,7 @@ class StoreController extends Zend_Controller_Action
                 $user->setIp($request->getServer('REMOTE_ADDR'));
             }
         } catch (Zend_Db_Adapter_Exception $e) {
-            $this->view->assign('response', 'Missing database driver.');
+            $this->view->assign('response', $e->getMessage());
         }
 
         if (isset($user)) {
@@ -38,8 +38,12 @@ class StoreController extends Zend_Controller_Action
                 $file->setTmpName($_FILES['file']['tmp_name']);
                 $file->setUploadedBy($user);
 
-                $url = $file->save();
-                $this->view->assign('response', $url . "\n");
+                try {
+                    $url = $file->save();
+                    $this->view->assign('response', $url . "\n");
+                } catch (Exception $e) {
+                    $this->view->assign('response', $e->getMessage());
+                }
             } else {
                 switch ($_FILES['file']['error']) {
                     case UPLOAD_ERR_OK:
