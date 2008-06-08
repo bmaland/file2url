@@ -30,6 +30,8 @@ class File
 
         $fileRow = $db->fetchRow('SELECT id, file_name FROM files WHERE access_code = ? AND active = 1', $accessCode);
 
+        if ($fileRow === false) return null;
+
         if (! file_exists("files/" . $fileRow->file_name)) {
             throw new Exception('Sorry, this file has been deleted from the file system.');
         }
