@@ -25,7 +25,7 @@ class StoreController extends Zend_Controller_Action
             $this->view->assign('response', "Invalid API key.");
         }
 
-        if ($user) {
+        if (isset($user)) {
             if ($_FILES['file']['error'] === 0) {
                 $file = new File();
                 $file->setFileName($_FILES['file']['name']);
