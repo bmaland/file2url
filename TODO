@@ -15,3 +15,7 @@ ORDER BY download_count DESC LIMIT 10;
 -Similar functionality to http://pear.php.net/package/HTTP_Upload
 
 -Implement support for uploading files via web interface
+
+-Make "api key" optional
+
+-Emacs: Function for uploading file in current buffer

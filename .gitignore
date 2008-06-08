@@ -1,5 +1,5 @@
 .cache
 .project
 .settings
-public/files
+public/files/*
 config.php

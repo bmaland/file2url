@@ -12,27 +12,33 @@ class FetchController extends Zend_Controller_Action
         $ip = $request->getServer('REMOTE_ADDR');
         $accessCode = Zend_Filter::get($request->getParam('accessCode'), 'Alnum');
 
-        if (strlen($accessCode) !== (int) $c->file->accessCodeLength) {
-            $this->view->assign('error', 'Erroneous input');
-        } else {
-            $this->getHelper('ViewRenderer')->setNoRender();
-
+        try {
             $file = File::findByAccessCode($accessCode);
 
-            $response = $this->getResponse();
-
-            if ($file->isAttachment()) {
-                $response->setHeader('Content-Type', 'application/octet-stream');
-                $response->setHeader('Content-Disposition', 'attachment; filename="' . $file->getName() . '"');
+            if (strlen($accessCode) !== (int) $c->file->accessCodeLength) {
+                $this->view->assign('error', 'Erroneous input.');
+            } else if ($file === null) {
+                $this->view->assign('error', 'Invalid access code.');
             } else {
-                $response->setHeader('Content-Type', $file->getType());
-            }
+                $this->getHelper('ViewRenderer')->setNoRender();
 
-            if ($file->getExtension() === 'phps' || $file->getExtension() === 'php') {
-                highlight_file($c->fileDir . $file->getName());
-            } else {
-                readfile($c->fileDir . $file->getName());
+                $response = $this->getResponse();
+
+                if ($file->isAttachment()) {
+                    $response->setHeader('Content-Type', 'application/octet-stream');
+                    $response->setHeader('Content-Disposition', 'attachment; filename="' . $file->getName() . '"');
+                } else {
+                    $response->setHeader('Content-Type', $file->getType());
+                }
+
+                if ($file->getExtension() === 'phps' || $file->getExtension() === 'php') {
+                    highlight_file($c->fileDir . $file->getName());
+                } else {
+                    readfile($c->fileDir . $file->getName());
+                }
             }
+        } catch (Zend_Db_Adapter_Exception $e) {
+            $this->view->assign('error', 'Missing database driver.');
         }
     }
 }
