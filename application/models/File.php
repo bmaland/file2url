@@ -28,7 +28,7 @@ class File
 
         $db = Zend_Registry::get('db');
 
-        $fileRow = $db->fetchRow('SELECT id, file_name, file_type FROM files WHERE access_code = ? AND active = 1', $accessCode);
+        $fileRow = $db->fetchRow('SELECT id, file_name FROM files WHERE access_code = ? AND active = 1', $accessCode);
 
         if (! file_exists("files/" . $fileRow->file_name)) {
             throw new Exception('Sorry, this file has been deleted from the file system.');
