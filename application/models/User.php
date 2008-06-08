@@ -11,9 +11,8 @@ class User
         $db = Zend_Registry::get('db');
 
         $id = $db->fetchCol('SELECT id FROM users WHERE api_key = ?', $apiKey);
-        if (! $id) {
-            throw new Exception("Invalid API Key");
-        }
+
+        if ($id === false) return null;
 
         $user->setId($id);
 

@@ -20,9 +20,14 @@ class StoreController extends Zend_Controller_Action
 
         try {
             $user = User::findByApiKey($apiKey);
-            $user->setIp($request->getServer('REMOTE_ADDR'));
-        } catch (Exception $e) {
-            $this->view->assign('response', "Invalid API key.");
+            
+            if ($user === null) {
+                $this->view->assign('response', 'Invalid API key.');
+            } else {
+                $user->setIp($request->getServer('REMOTE_ADDR'));
+            }
+        } catch (Zend_Db_Adapter_Exception $e) {
+            $this->view->assign('response', 'Missing database driver.');
         }
 
         if (isset($user)) {
