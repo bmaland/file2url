@@ -11,7 +11,7 @@ return array(
     ),
 
     'db' => array(
-        'adapter' => 'pdo_mysql',
+        'adapter' => 'pdo_pgsql',
         'params'  => array(
             'host'     => 'localhost',
             'username' => 'root',
