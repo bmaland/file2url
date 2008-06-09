@@ -137,12 +137,10 @@ class File
     private function _setFileType()
     {
         $fileInfo = pathinfo($this->_fileName);
-        $fileType = "";
+        $fileType = null
 
-        if (! array_key_exists('extension', $fileInfo)) {
-            $this->_fileType = 'text/plain';
-        } else {
-            $this->_extension = $fileInfo['extension'];
+        if (array_key_exists('extension', $fileInfo)) {
+            $this->_extension = strtolower($fileInfo['extension']);
 
             switch ($this->_extension) {
                 case 'png':
@@ -160,11 +158,26 @@ class File
                     $fileType = 'text/html';
                     break;
 
+                case 'xhtml':
+                    $fileType = 'application/xhtml+xml';
+                    break;
+
+                case 'xml':
+                    $fileType = 'application/xml';
+                    break;
+
+                case 'js':
+                    $fileType = 'text/javascript';
+                    break;
+
+                case 'yml':
+                case 'pl':
+                case 'el':
+                case 'ml':
                 case 'lisp':
                 case 'rb':
                 case 'py':
                 case 'txt':
-                case 'TXT':
                 case 'css':
                 case 'java':
                 case 'sh':
@@ -176,10 +189,7 @@ class File
                     break;
             }
 
-            /*
-             * If $fileType was not set, the file is to be treated as an attachment.
-             */
-            if ($fileType) {
+            if (isset($fileType)) {
                 $this->_fileType = $fileType;
             }
         }

@@ -10,7 +10,7 @@ ORDER BY download_count DESC LIMIT 10;
 
 -Implement unit tests
 
--Syntax highlighting of source code
+-Syntax highlighting of source code (already works for PHP)
 
 -Similar functionality to http://pear.php.net/package/HTTP_Upload
 

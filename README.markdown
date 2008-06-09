@@ -2,6 +2,12 @@
 
 ## Overview
 
+The purpose of this application is to facilitate _quick_ uploading of files from
+console and/or your Emacs buffer (more methods may be added - or contributed ;).
+A small shellscript sends the selected file to the PHP backend via curl, and
+echoes out the URL of the file to the terminal. Very useful for quick sharing of
+files, with no hassle.
+
 Requires PHP5 and Apache with mod_rewrite.
 The shellscript (client) requires curl.
 
