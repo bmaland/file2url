@@ -25,8 +25,20 @@ class FetchController extends Zend_Controller_Action
                 $response = $this->getResponse();
 
                 if ($file->isAttachment()) {
-                    $response->setHeader('Content-Type', 'application/octet-stream');
-                    $response->setHeader('Content-Disposition', 'attachment; filename="' . $file->getName() . '"');
+										// fix for IE catching or PHP bug issue
+										header("Pragma: public");
+										header("Expires: 0"); // set expiration time
+										header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+										// browser must download file from server instead of cache
+
+                    // force download dialog
+                  	header("Content-Type: application/force-download");
+										header("Content-Type: application/octet-stream");
+										header("Content-Type: application/download");
+									  header("Content-Disposition: attachment; filename=" . $file->getName() . ";");
+
+										header("Content-Transfer-Encoding: binary");
+										header("Content-Length: " . filesize($c->fileDir . $file->getName()));
                 } else {
                     $response->setHeader('Content-Type', $file->getType());
                 }

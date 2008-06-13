@@ -12,7 +12,7 @@ class User
 
         $id = $db->fetchCol('SELECT id FROM users WHERE api_key = ?', $apiKey);
 
-        if ($id === false) return null;
+        if (! $id) return null;
 
         $user->setId($id);
 

@@ -30,7 +30,7 @@ class File
 
         $fileRow = $db->fetchRow('SELECT id, file_name FROM files WHERE access_code = ? AND active = 1', $accessCode);
 
-        if ($fileRow === false) return null;
+        if (! $fileRow) return null;
 
         if (! file_exists("files/" . $fileRow->file_name)) {
             throw new Exception('Sorry, this file has been deleted from the file system.');
@@ -51,7 +51,7 @@ class File
      */
     public function isAttachment()
     {
-        return $this->_fileType == '';
+        return $this->_fileType === '';
     }
 
     /**
@@ -137,7 +137,7 @@ class File
     private function _setFileType()
     {
         $fileInfo = pathinfo($this->_fileName);
-        $fileType = null
+        $fileType = null;
 
         if (array_key_exists('extension', $fileInfo)) {
             $this->_extension = strtolower($fileInfo['extension']);
@@ -185,6 +185,7 @@ class File
                 case 'cnf':
                 case 'cfg':
                 case 'ini':
+            	case 'markdown':
                     $fileType = 'text/plain';
                     break;
             }
